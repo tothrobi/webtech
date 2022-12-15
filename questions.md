@@ -132,8 +132,6 @@ Viszont ha szeretnénk, hogy az adatok ne az űrlap címére, hanem egy másik c
 28. Milyen űrlapvezérlőnél nélkülözhetetlen a value attribútum megadása, és miért?
   - Pont: 2
 - Válasz: Például, ha egy űrlapban van egy beviteli mező és egy gomb, és szeretnénk, hogy a beviteli mezőben "Szöveg" szöveg jelenjen meg, valamint a gombon "Gomb" szöveg jelenjen meg, akkor a következőképpen állíthatjuk be:
-
-Copy code
 <form>
   <input type="text" value="Szöveg">
   <input type="submit" value="Gomb">
