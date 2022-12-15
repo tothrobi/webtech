@@ -1,32 +1,22 @@
 h1 {
-    border: 2px solid red;
-    border-radius: 10px;
-    text-align: center;
-  }
-  
-  table {
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid black;
-    text-align: center;
-  }
-  
-  td:empty {
-    display: none;
-  }
-  
-  input[type="number"] {
-    width: 75px;
-  }
-  
-  img {
-    height: 39px;
-    vertical-align: bottom;
-  }
-  
-  a:hover {
-    color: black;
-    background-color: lemonchiffon;
-  }
+  text-align: center;
+  margin-top: 2cm;
+  margin-bottom: 2cm;
+  letter-spacing: 5%;
+  text-transform: uppercase;
+}
+
+h2:before {
+  content: counter(section) ".";
+  counter-increment: section;
+}
+
+h2:after {
+  content: ".";
+}
+
+img {
+  width: 33%;
+  min-width: 5cm;
+  max-width: 15cm;
+}

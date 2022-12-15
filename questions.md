@@ -15,12 +15,11 @@
   
 4. Mi a SonarQube, mire használható?
   - Pont: 2
-  - Válasz: A SonarQube (korábban Sonar) egy nyílt forráskódú platform, amelyet a SonarSource fejlesztett ki a kódminőség folyamatos ellenőrzésére, hogy a kód statikus elemzésével automatikus felülvizsgálatot végezzen a hibák és kódszagok felderítésére 29 programozási nyelven.
+  - Válasz: A SonarQube egy nyílt forráskódú eszköz, amely segítségével elemezhetjük és javíthatjuk a forráskód minőségét. A SonarQube-ot általában a szoftverfejlesztés folyamatában használják, hogy biztosítsák a forráskód minőségét. A SonarQube segítségével lehetőségünk van a forráskód minőségét mérni és javítani többek között a kódduplikáció, a kommentek hiánya, a hibakezelés hiánya, a kódolási szabványok betartása, stb. szempontjából. A SonarQube segítségével tehát biztosíthatjuk, hogy a forráskód minősége megfelelő legyen.
   
 5. Mi az a reszponzivitás, reszponzív webdesign?
   - Pont: 3
-  - Válasz: A reszponzív webdesign a HTML és a CSS használatával automatikusan átméretezi, elrejti, kicsinyíti vagy nagyítja a weboldalt, hogy az minden eszközön (asztali számítógépek, táblagépek és telefonok) jól nézzen ki. A reszponzív webdesign olyan weboldalak készítéséről szól, amelyek minden eszközön jól néznek ki! A reszponzív webdesign automatikusan alkalmazkodik a különböző képernyőméretekhez és nézetablakokhoz.
-  gyors reakcióképesség
+  - Válasz: A reszponzív webdesign vagy reszponzivitás a weboldalak tervezésének és fejlesztésének egyik alapelve, amelynek lényege, hogy a weboldal megjelenése és működése alkalmazkodjon a felhasználó által használt eszközhöz és képernyőmérethez. A reszponzív webdesign segítségével biztosíthatjuk, hogy a weboldalunk minden eszközön és képernyőméreten jól nézzen ki és működjön.
   
 6. Sorolja fel a Memex legalább három tulajdonságát, jellemzőjét
   - Pont: 3
@@ -28,7 +27,7 @@
   
 7. Mi az az npm?
   - Pont: 1
-  - Válasz: Az npm a világ legnagyobb szoftver-nyilvántartója. A nyilvántartás több mint 800 000 kódcsomagot tartalmaz. A nyílt forráskódú fejlesztők az npm-et használják a szoftverek megosztására. Számos szervezet használja az npm-et a magánfejlesztések kezelésére is.
+  - Válasz: Az npm (Node Package Manager) a Node.js szoftvercsomag-kezelő rendszerének rövidítése. A Node.js egy nyílt forráskódú, JavaScript-alapú szerveroldali platform, amelyet webalkalmazások fejlesztésére használnak. Az npm segítségével a Node.js fejlesztők könnyedén telepíthetnek, frissíthetnek, törölhetnek és kezelhetnek különböző szoftvercsomagokat a Node.js platformon. Az npm segítségével tehát a Node.js fejlesztők könnyedén hozzáférhetnek a legújabb szoftvercsomagokhoz és frissítésekhez, és egyszerűen integrálhatják azokat a saját fejlesztéseikbe.
 
 8. Milyen design pattern-t követ a Microsoft ASP.NET?
   - Pont: 1
@@ -49,6 +48,7 @@
 12. Mik azok a sütik, és mire használhatóak?
   - Pont: 3
   - Válasz: Korlátozott idejű adatmegőrzés. A weboldallal egyszerre jön le. Biztonságos átvitel. Legközelebbi letöltésnél mellékeli a tartomány sütijeit.
+  A sütik (cookie-k) kis adatfájlok, amelyeket a weboldalak a felhasználó számítógépére vagy eszközére tárolnak, hogy később felismerhessék a felhasználót és a böngészési szokásait. A sütiket általában a weboldalak látogatási statisztikák készítésére, a felhasználó bejelentkezéseinek megjegyzésére, a felhasználói preferenciák tárolására és más hasonló célokra használják.
   
 13. Miért előnyösebb a W3C eseménykezelési módszerét alkalmazni a "klasszikus" eseménykezelés helyett?
   - Pont: 2
@@ -60,7 +60,9 @@
   
 15. Mire a jó HTTP feltételes GET metódusa
   - Pont: 3
-  - Válasz: Weboldal olvasása
+  - Válasz: Az HTTP (Hypertext Transfer Protocol) feltételes GET metódusa egy olyan HTTP kérési metódus, amely lehetővé teszi a kliens (például egy webböngésző) számára, hogy kérdezze le a szervertől (például egy weboldal szerverétől) egy adott erőforrás (például egy weboldal) állapotát.
+
+Az HTTP feltételes GET metódusa segítségével a kliens megadhat egy feltételt, amely alapján a szerver eldönti, hogy adja-e vissza az erőforrás állapotát, vagy sem. Például, ha a kliens megadja, hogy csak akkor kérje le az erőforrás állapotát, ha az az utolsó lekéréskor megváltozott, akkor a szerver csak akkor fogja visszaadni az erőforrás állapotát, ha az az utolsó lekéréskor megváltozott.
 
 16. Az ex mértékegység pontosan mekkora hosszt jelent a CSS-ben?
   - Pont: 2
