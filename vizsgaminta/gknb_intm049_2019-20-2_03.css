@@ -1,0 +1,25 @@
+form {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+thead {
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px ridge gray;
+}
+
+tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+td, th {
+  padding: 0px 5px;
+}
+
+#sorszam, #cim {
+  font-style: italic;
+}

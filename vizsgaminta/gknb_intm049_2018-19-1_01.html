@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hu-HU">
+	<head>
+		<title>ZH-adminisztráció</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="v1.css" />
+		<script src="v1.js"></script>
+	</head>
+	<body>
+		<h1>ZH-adminisztráció</h1>
+		<form id="urlap">
+			<table>
+				<thead>
+					<tr>
+						<th>Név</th>
+						<th>Neptun</th>
+						<th>1. ZH</th>
+						<th>1. ZH pót</th>
+						<th>2. ZH</th>
+						<th>2. ZH pót</th>
+						<th>Összesen</th>
+						<th>Aláírás</th>
+						<th>Megajánlott</th>
+					</tr>
+				</thead>
+				<tbody id="torzs">
+					<tr>
+						<td><input type="text" /></td>
+						<td><input type="text" pattern="[a-zA-Z0-9]{6}" maxlength="6" /></td>
+						<td><input type="number" min="0" max="7" value="0" /></td>
+						<td><input type="number" min="0" max="7" value="0" /></td>
+						<td><input type="number" min="0" max="7" value="0" /></td>
+						<td><input type="number" min="0" max="7" value="0" /></td>
+						<td>0</td>
+						<td class="rossz">megtagadva</td>
+						<td class="rossz">-</td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="button" value="+" id="hozzaad" />
+		</form>
+	</body>
+</html>

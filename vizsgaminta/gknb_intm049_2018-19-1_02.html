@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hu-HU">
+  <head>
+    <title>Szakdolgozat értékelő lap</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" 
+      href="gknb_intm049_2018-19-1_02.css" />
+  </head>
+  <body>
+    <h1>Szakdolgozat értékelő lap</h1>
+    <form action="#" id="urlap">
+      <div><label>Szerző (jelölt): </label>
+        <input id="szerzo" type="text" /></div>
+      <div><label for="szak">Szak: </label>
+        <input id="szak" type="text" list="szakok" /></div>
+      <datalist id="szakok">
+        <option>Mérnök informatikus</option>
+        <option>Gazdaságinformatikus</option>
+      </datalist>
+      <div><label for="szint">Képzési szint: </label>
+        <select>
+          <option>BSc</option>
+          <option>MSc</option>
+        </select>
+      </div>
+      <div><label for="cim">A szakdolgozat címe: </label>
+        <input id="cim" type="text" /></div>
+      <div><label for="biralo">A bíráló neve: </label>
+        <input id="biralo" type="text" /></div>
+      <div><label for="munkahely">Munkahelye: </label>
+        <input id="munkahely" type="text" /></div>
+      <div><label for="beosztas">Beosztása: </label>
+        <input id="beosztas" type="text" /></div>
+      <ol>
+        <li>Témaválasztás<span class="jobbra">Pontszám: 
+          <input id="temavalasztas" type="number" 
+          min="0" max="5" step="1" value="0" /></span><br />
+          <textarea></textarea></li>
+        <li>A dolgozat szerkezete, stílusa<span class="jobbra">Pontszám: 
+          <input id="szerkezet" type="number" 
+          min="0" max="8" step="1" value="0" /></span><br />
+          <textarea></textarea></li>
+        <li>Szakirodalom feldolgozása<span class="jobbra">Pontszám: 
+          <input id="szakirodalom" type="number" 
+          min="0" max="10" step="1" value="0" /></span><br />
+          <textarea></textarea></li>
+        <li>A téma kidolgozásának színvonala<span class="jobbra">Pontszám: 
+          <input id="kidolgozas" type="number" 
+          min="0" max="20" step="1" value="0" /></span><br />
+          <textarea></textarea></li>
+        <li>A dolgozat gyakorlati vonatkozása<span class="jobbra">Pontszám: 
+          <input id="gyakorlat" type="number" 
+          min="0" max="7" step="1" value="0" /></span><br />
+          <textarea></textarea></li>
+      </ol>
+      <p>Összpontszám: <span id="osszpontszam">0</span>, érdemjegy: <span id="jegy">elégtelen (1)</span>.</p>
+    </form>
+    <script src="gknb_intm049_2018-19-1_02.js"></script>
+    <script src="jsunity-0.6.js"></script>
+    <script src="gknb_intm049_2018-19-1_02_ut.js"></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+h1, h2, h3 {
+  font-family: Arial, sans-serif;
+  color: blue;
+  margin-top: 0px;
+}
+
+h1 {
+  font-size: 24pt;
+}
+
+h2 {
+  font-size: 18pt;
+}
+
+h3 {
+  font-size: 16pt;
+}
+
+section {
+  border-style: solid;
+  border-width: 3px;
+  border-left-width: 15px;
+  padding: 5px;
+  border-color: blue;
+  background-color: lightblue;
+  margin-top: 5mm;
+}
+
+.tajekoztato {
+  border-color: green;
+  background-color: lightgreen;
+}
+
+.keso {
+  border-color: #cc3300;
+  background-color: red;
+}
+
+label {
+  display: inline-block;
+  width: 2cm;
+}

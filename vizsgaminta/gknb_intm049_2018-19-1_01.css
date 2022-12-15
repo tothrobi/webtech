@@ -1,0 +1,18 @@
+h1 {
+	font-family: Arial, sans-serif;
+	font-size: 32pt;
+	color: blue;
+}
+
+td, th {
+	text-align: center;
+}
+
+.jo {
+	color: green;
+	font-weight: bold;
+}
+
+.rossz {
+	color: red;
+}

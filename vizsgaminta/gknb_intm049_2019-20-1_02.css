@@ -1,0 +1,23 @@
+details {
+  margin-bottom: 1cm;
+}
+
+img {
+  float: left;
+  border: 3px inset white;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+img.megjelol {
+  border-color: blue;
+}
+
+img.megforditva {
+  border-color: orange;
+}
+
+#info {
+  clear: left;
+  padding-top: 1cm;
+}

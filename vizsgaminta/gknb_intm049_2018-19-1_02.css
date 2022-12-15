@@ -1,0 +1,59 @@
+h1 {
+  margin-bottom: 1cm;
+}
+
+form {
+  width: 15cm;
+}
+
+div {
+  clear: both;
+  height: 30px;
+}
+
+label {
+  margin-top: 5px;
+  float: left;
+}
+
+input, select {
+  width: 9cm;
+  float: right;
+}
+
+input {
+  box-sizing: border-box;
+}
+
+input[type="number"] {
+  float: none;
+  width: 1cm;
+  box-sizing: content-box;
+}
+
+ol {
+  padding-left: 0.5cm;
+  box-sizing: border-box;
+  width: 15cm;
+  clear: both;
+}
+
+.jobbra {
+  right: 0;
+  top: -6px;
+  position: absolute;
+}
+
+li {
+  margin-top: 6px;
+  position: relative;
+}
+
+textarea {
+  width: 14.5cm;
+  height: 5cm;
+  box-sizing: border-box;
+  margin-top: 6px;
+}
+
+

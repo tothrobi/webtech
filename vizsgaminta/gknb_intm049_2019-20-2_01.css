@@ -1,0 +1,29 @@
+body {
+ font-family: "Linux Libertine", "Georgia", "Times", serif;
+}
+
+h1, h2 {
+  border-bottom: 1px solid lightgray;
+}
+
+h1 {
+  font-size: 1.8em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+p {
+  text-align: justify;
+  hyphens: auto;
+}
+
+img { 
+  float: right;
+}
+
+#feladvany {
+  letter-spacing: 1px;
+  font-weight: bold;
+}

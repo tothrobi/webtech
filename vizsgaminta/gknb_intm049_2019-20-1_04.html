@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8">
+    <title>Menetrend</title>
+    <link type="text/css" rel="stylesheet" href="gknb_intm049_2019-20-1_04.css" />
+    <meta name="keywords" content="vasút, menetrend, vonat, járat" />
+  </head>
+  <body>
+    <article id="tartalom">
+      <h1>Vasúti járatkereső</h1>
+      <section class="tajekoztato">
+        <h2>Utazási adatok megadása</h2>
+        <p>Adja meg, hogy honnan és hová szeretne utazni, majd nyomja meg a <em>Keresés</em> gombot! Az oldal kilistázza az összes olyan járatot, amivel eljuthat a kívánt helyre.</p>
+        <form id="urlap" action="#">
+          <div><label for="honnan">Honnan:</label><select id="honnan"></select></div>
+          <div><label for="hova">Hova:</label><select id="hova"></select></div>
+          <div><input type="submit" value="Keresés" /></div>
+        </form>
+      </section>
+    </article>
+    <noscript>Ez a weboldal nem működik az Ön gépén a JavaScript támogatás hiánya miatt.</noscript>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="vonat.js"></script>
+    <script src="gknb_intm049_2019-20-1_04.js"></script>
+  </body>
+</html>

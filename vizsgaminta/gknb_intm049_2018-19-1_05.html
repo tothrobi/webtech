@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8">
+    <title>Óraállások rögzítése</title>
+	<link type="text/css" rel="stylesheet" href="gknb_intm049_2018-19-1_05.css" />
+  </head>
+  <body>
+	<h1>km-számlálók állásának rögzítése</h1>
+	<form id="urlap" autocomplete="off">
+	<div><label>Rendszám: <input type="text" id="rendszam" maxlength="6" required="required" pattern="[a-zA-Z]{3}[0-9]{3}" list="adatlista" title="BBBSSS formátumban adja meg a rendszámot!"/></label></div>
+	<datalist id="adatlista">
+	</datalist>
+	<div><label>Leolvasás dátuma: <input type="date" id="datum" required="required" /></label></div>
+	<div><label>Óraállás: <input type="number" id="oraallas" required="required" min="0" /></label></div>
+	<div><input type="submit" value="Mentés" /></div>
+	</form>
+	<section>
+	<h2>A jármű eddig rögzített km-óra állásai:</h2>
+	<ol id="korabbi">
+	</ol>
+	</section>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="gknb_intm049_2018-19-1_05.js"></script>
+  </body>
+</html>

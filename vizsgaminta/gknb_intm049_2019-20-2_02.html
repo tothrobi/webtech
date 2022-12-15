@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8">
+    <title>Tankprobléma</title>
+    <link type="text/css" rel="stylesheet" href="gknb_intm049_2019-20-2_02.css" />
+  </head>
+  <body>
+    <h1><a href="https://hu.wikipedia.org/wiki/Henger" target="_blank">Tankprobléma</a></h1>
+    <form action="#">
+      <fieldset>
+        <legend>Tartály paraméterei</legend>
+        <div><label for="r">Sugár (cm):</label><input type="number" id="r" min="0" step="any" value="0"/></div>
+        <div><label for="L">Hossz (cm):</label><input type="number" id="L" min="0" step="any" value="0"/></div>
+      </fieldset>
+      <fieldset>
+        <legend>Folyadék paraméterei</legend>
+        <div><label for="h">Szint:</label><input type="range" id="h" min="0" step="any" /><output id="hvalue" for="h, r, L" ></output></div>
+      </fieldset>
+      <fieldset>
+        <legend>Folyadék mennyisége</legend>
+        <div><output id="V" for="h, r, L" >&nbsp;</output></div>
+      </fieldset>
+    </form>
+    <noscript>Ez a weboldal nem működik az Ön gépén a JavaScript támogatás hiánya miatt.</noscript>
+    <script src="gknb_intm049_2019-20-2_02.js"></script>
+  </body>
+</html>

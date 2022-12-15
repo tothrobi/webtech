@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8">
+    <title>Lemezek</title>
+    <meta name="author" content="Hatwagner F. Miklós" />
+    <link type="text/css" rel="stylesheet" href="gknb_intm049_2019-20-2_03.css" />
+  </head>
+  <body>
+    <h1><a href="https://musicbrainz.org/" target="_blank">Lemezek</a></h1>
+    <form action="#">
+      <fieldset>
+      <legend>Válasszon albumot:</legend>
+      <div><input id="fekete" name="album" type="radio" /><label for="fekete">Sub Bass Monster - Fekete lemez</label></div>
+      <div><input id="rigel" name="album" type="radio" /><label for="rigel">Dynatron - The Rigel Axiom</label></div>
+      </fieldset>
+    </form>
+    <table>
+      <thead>
+        <th><a id="sorszam">Sorszám</a></th>
+        <th><a id="cim">Cím</a></th>
+        <th><a id="eloado">Előadó</a></th>
+        <th><a id="hossz">Hossz</a></th>
+      </thead>
+      <tbody id="lista">
+      </tbody>
+    </table>
+    <noscript>Ez a weboldal nem működik az Ön gépén a JavaScript támogatás hiánya miatt.</noscript>
+    <script src="albumok.js"></script>
+    <script src="gknb_intm049_2019-20-2_03.js"></script>
+  </body>
+</html>

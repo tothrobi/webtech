@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="utf-8">
+    <title>Akasztófa játék</title>
+    <link type="text/css" rel="stylesheet" href="gknb_intm049_2019-20-2_01.css" />
+  </head>
+  <body>
+    <h1>Akasztófa játék</h1>
+    <p>Az akasztófa játékot papír és ceruza segítségével két vagy több játékos játszhatja. Az egyik játékos gondol egy szóra, és a másik játékos megpróbálja kitalálni a szót a szóban szereplő betűk kitalálásával.</p>
+    <h2>Áttekintés</h2>
+    <p>A kitalálandó szót a szóban szereplő betűk számával megegyező számú és elrendezésű vízszintes vonal reprezentálja. A találgató játékos javasol egy betűt, mely ha szerepel a kitalálandó szóban, a betű helyének megfelelő vonalakra ráírásra kerül. Amennyiben a betű nem szerepel a kitalálandó szóban, úgy egy stilizált akasztófa egy része kerül lerajzolásra.</p>
+    <p>A játék akkor ér véget, ha az akasztófa (és a benne lévő emberalak) teljes egészében megformálásra kerül, vagy kérdező az összes betűt kitalálja. A játék végét jelentő stilizált ábra megjelenésében eltérő lehet: egyes esetekben az akasztófa áll 7-10 vagy több vonalból, valamint az emberalak is hasonló mennyiségű vonalból. Nehezítésnek számít, ha ennél kevesebb elemből állnak a részek, könnyítésnek, ha több elemből. Az is könnyítés, ha a feladvány szófaját vagy témáját tekintve a feladó segítséget ad.</p>
+    <p>Egyes esetekben az akasztófa mint szimbólum alkalmazása a társadalmi megítélése miatt nem helyénvaló, így helyettesíteni szokták más ábrákkal, de a játék lényegét tekintve ugyanaz marad.</p>
+    <h2>Kialakulása</h2>
+    <p>A játék eredete tisztázatlan. Egyes források a viktoriánus Angliát jelölik meg eredetként. A játékot Alice Bertha Gomme <em>Tradicionális játékok</em> című, 1894-ben megjelent könyve is említi „Madarak, állatok és halak” néven. </p>
+    <form>
+      <fieldset>
+        <legend>Szólások, közmondások</legend>
+        <p id="feladvany">A _a_a_ _____ _a____a__<img src="60px-Hangman-0.png" alt="0 hiba" /></p>
+        <p>Már felhasznált betűk: <span id="felhasznalt">a</span></p>
+        <label for="betuk">Felhasználható betűk:</label>
+        <select id="betuk">
+          <option>b</option>
+          <option>c</option>
+        </select>
+        <input type="submit" value="Próbáljuk meg!" />
+      </fieldset>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="gknb_intm049_2019-20-2_01.js"></script>
+  </body>
+</html>
