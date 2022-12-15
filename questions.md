@@ -30,9 +30,9 @@
   - Pont: 1
   - Válasz: Az npm a világ legnagyobb szoftver-nyilvántartója. A nyilvántartás több mint 800 000 kódcsomagot tartalmaz. A nyílt forráskódú fejlesztők az npm-et használják a szoftverek megosztására. Számos szervezet használja az npm-et a magánfejlesztések kezelésére is.
 
-8. Milyen design pattern-t követ a Microsoft ASP.NET
+8. Milyen design pattern-t követ a Microsoft ASP.NET?
   - Pont: 1
-  - Válasz:
+  - Válasz: A Microsoft ASP.NET webfejlesztési platformja több design pattern-t is követ. Az egyik ilyen design pattern a model-view-controller (MVC) pattern, amely a webes alkalmazások fejlesztésének egyik leggyakrabban használt mintája. Ez a minta elválasztja a felhasználói felületet (view), a alkalmazás logikáját (controller), és az adatokat (model) egymástól, ami lehetővé teszi, hogy könnyen frissíthető és testre szabható legyen az alkalmazás.
   
 9. Adjon meg legalább hármat a HTML5 újdonságai közül!
   - Pont: 3
@@ -74,7 +74,7 @@
 
 18. Mi a kapcsolat az SGML és a HTML között, különös tekintettel a HTML5-re? 
   - Pont: 3
-  - Válasz: 
+  - Válasz: Az SGML (Standard Generalized Markup Language) egy szabványos, generikus jelölőnyelv, amelyet dokumentumok jelölésére használnak. A HTML (Hypertext Markup Language) az SGML egy speciális változata, amelyet hipertext dokumentumok jelölésére használnak. A HTML5 pedig a HTML legújabb változata, amely számos új funkciót tartalmaz, például támogatja a videó és az audio lejátszását, valamint a 2D-s és 3D-s grafikát.
 
 19. A CSS képpont (px) mértékegysége valóban, mindig fizikai képpontokban méri a távolságot? Ha nem, mondjon példát rá, hogy milyen esetben és miért nem!
   - Pont: 2
@@ -100,5 +100,43 @@
 
 21. Mi az a három módszer, amivel valaminek a színét be lehet állítani CSS-ben? Adjon ezekre egy-egy mintát?
   - Pont: 3
-  - Válasz:            
+  - Válasz:  
+
+22. Miért lehet indokolt több adatforrást is megadni weboldalba ágyazott videó lejátszásakor?
+  - Pont: 2
+  - Válasz: Több adatforrást megadva weboldalba ágyazott videó lejátszásakor azért lehet indokolt, mert így a videó megtekintése folyamatosan történhet, anélkül, hogy a lejátszás akadozna vagy megszakadna. Ha egy adatforrásból származó videót játszunk le, és valami miatt megszakad az adatforrás, akkor a videó megtekintése is megszakad. Ha viszont több adatforrásból származó videót játszunk le, akkor a lejátszás folyamatosan történhet, mert ha az egyik adatforrás megszakad, akkor a másik adatforrásra váltva a videó megtekintése folytatódhat. Ez különösen fontos, ha a videót élőben sugározzuk, hiszen ilyenkor a nézőknek folyamatosan kell biztosítani a lejátszást.  
+
+23. Milyen szintaktikai szerepe van a CSS-ben a ::-nak?
+    - Pont: 2
+  - Válasz: A CSS (Cascading Style Sheets) nyelvben a :: (dupla kettőspont) szintaktikai elemének van szerepe. A ::-t ún. pseudo-elemként használják, ami olyan elemeket jelöl, amelyek nem léteznek a dokumentum DOM (Document Object Model) struktúrájában, de mégis lehetővé teszik a stílusok alkalmazását rájuk. Például a ::before pseudo-elem segítségével hozzáadhatunk tartalmat egy elem elé, míg a ::after pseudo-elem segítségével tartalmat adhatunk hozzá az elem után.
+
+24. A margó (margin), szegély (border) és kitöltés (padding) közül melyiknek/melyek- nek lehet negatív méretet megadni?
+    - Pont: 2
+  - Válasz: A margó (margin), szegély (border) és kitöltés (padding) közül csak a margó méretének lehet negatív értéket megadni. A szegély és a kitöltés méretének nem lehet negatív értéket megadni.
+
+25. Milyen űrlapvezérlőnél nélkülözhetetlen a value attribútum megadása, és miért?
+  - Pont: 2
+- Válasz: Az űrlapvezérlők közül a legtöbb esetben nélkülözhetetlen a value attribútum megadása. Ennek oka, hogy az űrlapvezérlők legtöbb esetben értéket tárolnak, és a value attribútum segítségével lehet megadni, hogy milyen értéket szeretnénk tárolni az űrlapvezérlőben. Például ha beviteli mezőt (input) használunk, akkor a value attribútum segítségével lehet megadni, hogy milyen szöveget szeretnénk megjeleníteni a beviteli mezőben. Ha pedig gombot (button) használunk, akkor a value attribútum segítségével lehet megadni, hogy milyen szöveget szeretnénk megjeleníteni a gombon.
+
+26. Hogyan lehet beállítani CSS-ben a kitöltések (padding) színét?
+  - Pont: 2
+- Válasz: CSS-ben a kitöltések színét úgy lehet beállítani, hogy az adott elemhez rendelünk egy padding-szín nevű tulajdonságot, és annak értékéül megadjuk a kívánt színt. Például, ha szürke színű kitöltést szeretnénk az adott elemhez, akkor a következőképpen állíthatjuk be:
+padding-color: grey;
+
+27. Írjon egy példát arra, amikor szükséges egy űrlapvezérlőnél (pl. küldés gomb) megadni a formaction attribútumot!
+  - Pont: 2
+- Válasz: Az űrlapvezérlők közül a legtöbb esetben nem szükséges a formaction attribútum megadása. Ennek oka, hogy az űrlapvezérlők alapértelmezetten az adott űrlap (form) címére továbbítják az adatokat. Például, ha egy űrlapban van egy küldés (submit) gomb, akkor alapértelmezetten a küldés gomb megnyomásakor az adatok az űrlap címére kerülnek továbbításra.
+
+Viszont ha szeretnénk, hogy az adatok ne az űrlap címére, hanem egy másik címre kerüljenek továbbításra, akkor a formaction attribútumot kell megadni az adott űrlapvezérlőnél. Például, ha egy űrlapban van egy küldés (submit) gomb, és szeretnénk, hogy az adatok a "http://example.com/submit" címre kerüljenek továbbításra, akkor a következőképpen állíthatjuk be:
+
+28. Milyen űrlapvezérlőnél nélkülözhetetlen a value attribútum megadása, és miért?
+  - Pont: 2
+- Válasz: Például, ha egy űrlapban van egy beviteli mező és egy gomb, és szeretnénk, hogy a beviteli mezőben "Szöveg" szöveg jelenjen meg, valamint a gombon "Gomb" szöveg jelenjen meg, akkor a következőképpen állíthatjuk be:
+
+Copy code
+<form>
+  <input type="text" value="Szöveg">
+  <input type="submit" value="Gomb">
+</form>
+Ebben az esetben a beviteli mezőben "Szöveg" szöveg fog megjelenni, és a gombon "Gomb" szöveg fog megjelenni. Ha nem adnánk meg a value attribútumokat, akkor a beviteli mező és a gomb üresen jelenne meg.
 # Notes

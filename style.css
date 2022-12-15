@@ -1,0 +1,32 @@
+h1 {
+    border: 2px solid red;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  table {
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid black;
+    text-align: center;
+  }
+  
+  td:empty {
+    display: none;
+  }
+  
+  input[type="number"] {
+    width: 75px;
+  }
+  
+  img {
+    height: 39px;
+    vertical-align: bottom;
+  }
+  
+  a:hover {
+    color: black;
+    background-color: lemonchiffon;
+  }
