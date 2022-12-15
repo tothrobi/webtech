@@ -19,7 +19,8 @@
   
 5. Mi az a reszponzivitás, reszponzív webdesign?
   - Pont: 3
-  - Válasz:
+  - Válasz: A reszponzív webdesign a HTML és a CSS használatával automatikusan átméretezi, elrejti, kicsinyíti vagy nagyítja a weboldalt, hogy az minden eszközön (asztali számítógépek, táblagépek és telefonok) jól nézzen ki. A reszponzív webdesign olyan weboldalak készítéséről szól, amelyek minden eszközön jól néznek ki! A reszponzív webdesign automatikusan alkalmazkodik a különböző képernyőméretekhez és nézetablakokhoz.
+  gyors reakcióképesség
   
 6. Sorolja fel a Memex legalább három tulajdonságát, jellemzőjét
   - Pont: 3
@@ -27,7 +28,7 @@
   
 7. Mi az az npm?
   - Pont: 1
-  - Válasz: 
+  - Válasz: Az npm a világ legnagyobb szoftver-nyilvántartója. A nyilvántartás több mint 800 000 kódcsomagot tartalmaz. A nyílt forráskódú fejlesztők az npm-et használják a szoftverek megosztására. Számos szervezet használja az npm-et a magánfejlesztések kezelésére is.
 
 8. Milyen design pattern-t követ a Microsoft ASP.NET
   - Pont: 1
