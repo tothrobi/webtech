@@ -1,22 +1,23 @@
-h1 {
-  text-align: center;
-  margin-top: 2cm;
-  margin-bottom: 2cm;
-  letter-spacing: 5%;
-  text-transform: uppercase;
+body {
+  width: 800px;
+  margin: 0 auto;
+  padding: 0 1cm;
 }
 
-h2:before {
-  content: counter(section) ".";
-  counter-increment: section;
+h1 a {
+  font-family: "Zilap", sans-serif;
 }
 
-h2:after {
-  content: ".";
+p {
+  text-align: justify;
+  hyphens: auto;
 }
 
-img {
-  width: 33%;
-  min-width: 5cm;
-  max-width: 15cm;
+input[type="text"], textarea {
+  width: 100%;
+  height: 10cm;
+}
+
+input[type="image"] {
+  width: 25%;
 }
