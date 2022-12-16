@@ -1,23 +1,41 @@
-body {
-  width: 800px;
-  margin: 0 auto;
-  padding: 0 1cm;
+
+/* Címsor betűtípusa */
+h1 {
+  font-family: Arimo, Arial, sans-serif;
+  /* Extra-extra-extra nagy méret */
+  font-size: 3em;
 }
 
+/* Aláhúzás csak az egérkurzor fölött */
 h1 a {
-  font-family: "Zilap", sans-serif;
+  text-decoration: none;
+}
+h1 a:hover {
+  text-decoration: underline;
 }
 
-p {
-  text-align: justify;
-  hyphens: auto;
+/* Vezérlő csoportok közötti térköz */
+fieldset + fieldset {
+  margin-top: 10px;
 }
 
-input[type="text"], textarea {
-  width: 100%;
-  height: 10cm;
+/* Vezérlő csoportok kerete és térköze */
+fieldset {
+  border: 3px solid brown;
+  padding: 10px;
 }
 
-input[type="image"] {
-  width: 25%;
+/* Címkék szélessége */
+label {
+  width: 3cm;
+}
+
+/* Csúszka és szöveg közötti térköz */
+label + input[type="range"] {
+  margin-left: 0.5cm;
+}
+
+/* Vezérlők teljes szélessége */
+input[type="number"], input[type="range"] {
+  width: 100px;
 }
