@@ -6,6 +6,7 @@ class Alkatresz {
 }
 const form = document.querySelector("form");
 const table = document.querySelector("table tbody");
+let totalCount = 0;
 
 form.addEventListener("submit", event => {
   event.preventDefault();
@@ -18,7 +19,6 @@ form.addEventListener("submit", event => {
   const countCell = newRow.insertCell(1);
   nameCell.innerHTML = part.name;
   countCell.innerHTML = part.count;
-
-  const totalCount = table.getElementsByTagName("tr").length;
+  totalCount += parseInt(count);
   alert("Összesen " + totalCount + " alkatrészünk van!");
 });
