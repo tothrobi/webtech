@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Alkatrészek!</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Székek alkatrész-katalógusa</h1>
+  <table>
+    <caption>Rendelkezésre álló alkatrészek</caption>
+    <thead>
+      <tr>
+        <th>Megnevezés</th>
+        <th>Darab</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Adatsorok itt kerülnek majd elhelyezésre -->
+    </tbody>
+  </table>
+  <details>
+    <summary>Új alkatrész felvitele</summary>
+    <form>
+      <label for="partname">Megnevezés:</label>
+      <input type="text" list="partlist" id="partname" required>
+      <datalist id="partlist">
+        <option value="Székláb">
+        <option value="Karfa">
+        <option value="Ülőlap">
+        <option value="Háttámla">
+        <option value="Párna">
+      </datalist>
+      <br>
+      <label for="partcount">Darab:</label>
+      <input type="number" id="partcount" min="1" value="1" required>
+      <br>
+      <input type="submit" value="Adatok beküldése" id="upload">
+    </form>
+  </details>
+</body>
+</html>
