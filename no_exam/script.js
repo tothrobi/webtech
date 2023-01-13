@@ -19,6 +19,6 @@ form.addEventListener("submit", event => {
   nameCell.innerHTML = part.name;
   countCell.innerHTML = part.count;
 
-  const totalCount = table.getElementsByTagName("tr").length -1;
+  const totalCount = table.getElementsByTagName("tr").length;
   alert("Összesen " + totalCount + " alkatrészünk van!");
 });
