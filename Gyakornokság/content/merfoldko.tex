@@ -1,0 +1,2081 @@
+\chapter*{Forráskód}
+\addcontentsline{toc}{chapter}{Forráskód} 
+\section*{Nézetek} 
+\addcontentsline{toc}{section}{Nézetek}
+\subsection*{WelcomeView nézet}
+\addcontentsline{toc}{subsection}{WelcomeView nézet}
+\begin{spacing}{2}
+\end{spacing}
+
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct WelcomeView: View {
+            @State private var isShowingLoginView = false
+            @State private var isShowingRegisterView = false
+            @EnvironmentObject var viewRouter: ViewRouter
+            
+            var body: some View {
+                    ZStack{
+                        SetBackgroundImage(image: "Background1")
+                        VStack{
+                            HStack {
+                                Text("Fitness is the")
+                                    .font(.custom(.light, size: 20))
+                                    .foregroundColor(.white)
+                                Text("KEY")
+                                    .font(.custom(.bold, size: 25))
+                                    .foregroundColor(Color.theme.lighBlue)
+                            }
+                            .padding(.top,70)
+                      
+                            Image("Logo")
+                           
+                            VStack{
+                                Button(action: {
+                                    withAnimation {
+                                        viewRouter.currentPage = .logInPage
+                                    }
+                                }) {
+                                    PrimaryButton(title: "Login", fontColor: Color.theme.white, backgroundColor: Color.theme.lighBlue)
+                                }
+                                Button(action: {
+                                    withAnimation {
+                                        viewRouter.currentPage = .registerPage
+                                    }
+                                }) {
+                                    PrimaryButton(title: "Registration", fontColor: Color.theme.lighBlue, backgroundColor: Color.theme.darkGray)
+                                        .overlay(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.theme.lighBlue, lineWidth: 1))
+                                }
+                            }
+                            .frame(width: UIScreen.main.bounds.width - 32)
+                            .padding(.bottom,70)
+                        }
+                }
+            }
+        }
+        struct WelcomeView_Previews: PreviewProvider {
+            static var previews: some View {
+                NavigationView {
+                    WelcomeView()
+                        .navigationBarHidden(true)
+                }
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+
+\subsection*{LoginView nézet}
+\addcontentsline{toc}{subsection}{Login nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct LoginView: View {
+            @ObservedObject var viewModel = ViewModel()
+            @EnvironmentObject var viewRouter: ViewRouter
+            
+            @State var loginProcessing = false
+            @State private var showingAlert = false
+            
+            @State var loginErrorMessage = ""
+            
+            @State private var email = ""
+            @State private var password = ""
+            
+            var dataIsValid: Bool {
+                   return !loginProcessing && !email.isEmpty && !password.isEmpty
+               }
+            var buttonColor: Color {
+                return dataIsValid ? Color.theme.lighBlue : .gray
+            }
+            
+            
+                NavigationView {
+                    ZStack{
+                        SetBackgroundImage(image: "Background2")
+                        
+                        VStack(alignment: .leading){
+                            HeaderView(title: "Login", navigationPage: .welcomePage, arrowVisibility: true)
+                           
+                            VStack(alignment: .leading, spacing: 12){
+                                Text("Hi User!")
+                                    .font(.custom(.regular, size: 20))
+                                    .foregroundColor(Color.theme.lighBlue)
+        
+                                Text("Log in to continue.")
+                                    .font(.custom(.light, size: 16))
+                                    .foregroundColor(Color.theme.white)
+                            }
+                            .padding(.top, 50)
+                            
+                            VStack{
+                                TextFieldView(text: $email,title: "Email")
+                                
+                                SecureFieldView(text: $password, title: "Password")
+                            }
+                            Spacer()
+                            VStack(spacing: 15){
+                                Button(action: {
+                                    showingAlert = true
+                                    loginUser(email: email, password: password)
+                                }) {
+                                    PrimaryButton(title: "Login", fontColor: Color.theme.white, backgroundColor: buttonColor)
+                                        .padding(.top)
+                                }
+                                .disabled(!dataIsValid)
+                                if loginProcessing {
+                                    ProgressView()
+                                }
+                                if !loginErrorMessage.isEmpty {
+                                    Text("Failed login: \(loginErrorMessage)")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                            Text("or sign in using socialmedia")
+                        .font(.custom(.light, size: 16))
+                        .foregroundColor(Color.theme.white)
+                        .tracking(0.7)
+                        .frame(maxWidth: .infinity,alignment: .center)
+                        .padding(.vertical, 10)
+                    
+                    VStack(spacing: 15){
+                        SocialLoginButton(image: "AppleLogo", text: "Sing in with AppleID")
+                            
+                        SocialLoginButton(image: "GoogleLogo", text: "Sign in with Google")
+                    }
+                
+                }
+                
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct LoginView: View {
+            @ObservedObject var viewModel = ViewModel()
+            @EnvironmentObject var viewRouter: ViewRouter
+            
+            @State var loginProcessing = false
+            @State private var showingAlert = false
+            
+            @State var loginErrorMessage = ""
+            
+            @State private var email = ""
+            @State private var password = ""
+            
+            var dataIsValid: Bool {
+                return !loginProcessing && !email.isEmpty && !password.isEmpty
+            }
+            var buttonColor: Color {
+                return dataIsValid ? Color.theme.lighBlue : .gray
+            }
+    
+            var body: some View {
+                NavigationView {
+                    ZStack{
+                        SetBackgroundImage(image: "Background2")
+                        
+                        VStack(alignment: .leading){
+                            HeaderView(title: "Login", navigationPage: .welcomePage, arrowVisibility: true)
+                        
+                            VStack(alignment: .leading, spacing: 12){
+                                Text("Hi User!")
+                                    .font(.custom(.regular, size: 20))
+                                    .foregroundColor(Color.theme.lighBlue)
+
+                                Text("Log in to continue.")
+                                    .font(.custom(.light, size: 16))
+                                    .foregroundColor(Color.theme.white)
+                            }
+                            .padding(.top, 50)
+                            
+                            VStack{
+                                TextFieldView(text: $email,title: "Email")
+                                
+                                SecureFieldView(text: $password, title: "Password")
+                            }
+                            Spacer()
+                            VStack(spacing: 15){
+                                Button(action: {
+                                    showingAlert = true
+                                    loginUser(email: email, password: password)
+                                }) {
+                                    PrimaryButton(title: "Login", fontColor: Color.theme.white, backgroundColor: buttonColor)
+                                        .padding(.top)
+                                }
+                                .disabled(!dataIsValid)
+                                if loginProcessing {
+                                    ProgressView()
+                                }
+                                if !loginErrorMessage.isEmpty {
+                                    Text("Failed login: \(loginErrorMessage)")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                            
+                            Text("or sign in using socialmedia")
+                                .font(.custom(.light, size: 16))
+                                .foregroundColor(Color.theme.white)
+                                .tracking(0.7)
+                                .frame(maxWidth: .infinity,alignment: .center)
+                                .padding(.vertical, 10)
+                            
+                            VStack(spacing: 15){
+                                SocialLoginButton(image: "AppleLogo", text: "Sing in with AppleID")
+                                    
+                                SocialLoginButton(image: "GoogleLogo", text: "Sign in with Google")
+                            }
+                    }
+                }
+                .navigationBarHidden(true)      
+            }
+        }
+                
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        HStack{
+                                Image("Logo2")
+                                    .padding(.vertical, 40)
+                                    .frame(maxWidth: .infinity,alignment: .center)
+                                    .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+                            }
+                        }
+                        .frame(width: UIScreen.main.bounds.width - 52)
+        func loginUser(email: String, password: String) {
+                        
+                        loginProcessing = true
+                        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                            
+                            guard error == nil else {
+                                loginProcessing = false
+                                loginErrorMessage = error!.localizedDescription
+                                return
+                            }
+                            switch authResult {
+                            case .none:
+                                print("Could not sign in user.")
+                                loginProcessing = false
+                            case .some(_):
+                                print("User signed in")
+                                loginProcessing = false
+                                withAnimation {
+                                    viewRouter.currentPage = .homePage
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+        }
+        struct LoginView_Previews: PreviewProvider {
+            static var previews: some View {
+                LoginView()
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+
+\subsection*{RegisterView nézet}
+\addcontentsline{toc}{subsection}{RegisterView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct RegisterView: View {
+            @ObservedObject var viewModel = ViewModel()
+            @EnvironmentObject var viewRouter: ViewRouter
+            
+            @State var registerProcessing = false
+            @State private var showingAlert = false
+            
+            @State var registerErrorMessage = ""
+            @State private var statusMessage = ""
+            
+            @State private var email1 = ""
+            @State private var password1 = ""
+            @State private var passwordConfirmation1 = ""
+            @State private var firstName1 = ""
+            @State private var lastName1 = ""
+            
+            @State var textFields: [String] = ["Last name","First name","Email"]
+            @State var secureFields: [String] = ["Password", "Password confirmation"]
+            
+            @State var testObserver: AnyCancellable?
+
+            var dataIsValid: Bool {
+                return !registerProcessing && !email1.isEmpty && !password1.isEmpty && !passwordConfirmation1.isEmpty && password1 == passwordConfirmation1
+            }
+            var buttonColor: Color {
+                return dataIsValid ? Color.theme.lighBlue : .gray
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        
+        }
+            var body: some View {
+                NavigationView {
+                    ZStack{
+                        SetBackgroundImage(image: "Background3")
+                        
+                        VStack(alignment: .center){
+                            HeaderView(title: "Registration", navigationPage: .welcomePage, arrowVisibility: true)
+                            
+                            VStack{
+                                TextFieldView(text: $lastName1, title: "Last name")
+                                TextFieldView(text: $firstName1, title: "First name")
+                                TextFieldView(text: $email1, title: "Email")    
+                                SecureFieldView(text: $password1, title: "Password")
+                                SecureFieldView(text: $passwordConfirmation1, title: "Password confirmation")
+                            }
+                            .padding(.top,10)
+                            VStack(spacing: 15) {
+                                Button(action: {
+                                    showingAlert = true
+                                    handleAction()
+                                }) {
+                                    PrimaryButton(title: "Registration", fontColor: Color.theme.white, backgroundColor: buttonColor)
+                                }
+                                .disabled(!dataIsValid)
+                                if registerProcessing {
+                                    ProgressView()
+                                }
+                                
+                                if !registerErrorMessage.isEmpty {
+                                            Text("Failed creating account: \(registerErrorMessage)")
+                                                .foregroundColor(.red)
+                                }
+                            }
+                            HStack{
+                                Text("Already have an account?")
+                                    .font(.custom(.light, size: 14))
+                                    .foregroundColor(Color.theme.white.opacity(0.7))
+                                    .tracking(0.7)
+                                
+                                Button(action: {
+                                    withAnimation {
+                                        viewRouter.currentPage = .logInPage
+                                    }
+                                }) {
+                                    Text("Login")
+                                        .font(.custom(.bold, size: 16))
+                                        .foregroundColor(Color.theme.white)
+                                        .multilineTextAlignment(.leading)
+                                }
+                                .opacity(0.9)
+                            }
+                            .padding(.vertical)
+                            VStack(spacing: 15){
+                                Button(action: {
+                                    registerSocialMedia()
+                                }){
+                                    SocialLoginButton(image: "GoogleLogo", text: "Sign in with Google")
+                                }
+                                SocialLoginButton(image: "AppleLogo", text: "Sing in with AppleID")
+                            }
+                            HStack{
+                                Image("Logo2")
+                                    .padding(.vertical,30)
+                                    .frame(maxWidth: .infinity,alignment: .center)
+                                    .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+                            }
+                        }
+                        .frame(width: UIScreen.main.bounds.width - 52)
+                    }
+                }
+                .padding(0.0)
+                .navigationBarHidden(false)
+                .onAppear {
+                    self.testObserver = self.email1.publisher(for: \.self).sink { newValue in
+                        print("email1 changed, newValue: \(newValue)")
+                    }
+                }
+            }
+            
+            
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        private func handleAction() {
+                registerUser()
+            }
+        private func registerUser(){
+                registerProcessing = true
+                Auth.auth().createUser(withEmail: email1, password: password1) { authResult, error in
+                        guard error == nil else {
+                            registerErrorMessage = error!.localizedDescription
+                            registerProcessing = false
+                            return
+                        }     
+                        switch authResult {
+                        case .none:
+                            print("Could not create account.")
+                            registerProcessing = false
+                        case .some(_):
+                            print("User created")
+                            registerProcessing = false
+                            viewRouter.currentPage = .homePage
+                        }
+                    print("Successfully created user: \(authResult?.user.uid ?? "")")
+                    self.viewModel.addUserData(firstName: self.firstName1, lastName: self.lastName1, email: self.email1, password: self.password1)
+                    }
+            }      
+        private func registerSocialMedia(){
+                        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+                        let config = GIDConfiguration(clientID: clientID)
+                        GIDSignIn.sharedInstance.signIn(with: config, presenting: getViewController()) { [self] user, err in
+                            if let error = err {
+                                print(error.localizedDescription)
+                                return
+                            }
+                            guard
+                                let auth = user?.authentication,
+                                let userToken = auth.idToken
+                            else {
+                                return
+                            }
+                            let credential = AuthProvider.credential(withIDToken: userToken,
+                            accessToken: auth.accessToken)
+                        }
+                    }
+        Auth.auth().signIn(with: credential) { result, err in
+                                switch result {
+                                case .none:
+                                    print("Could not create account.")
+                                    registerProcessing = false
+                                case .some(_):
+                                    print("User created")
+                                    registerProcessing = false
+                                    viewRouter.currentPage = .homePage
+                                }
+                                self.viewModel.addUserData(firstName: (result?.user.firstname)! , lastName: (result?.user.lastname)!, email: (result?.user.email)!, password: result?.user.password)
+                                
+                            }
+        func storeUserInformation() {
+                        guard let uid = Auth.auth().currentUser?.uid else {return}
+                        let userData = ["email": self.email1, "firstName": self.firstName1, "lastName": self.lastName1, "imageUrl": "imageurl", "id": uid]
+                        Firestore.firestore().collection("users").document(uid).setData(userData) { err in
+                            if let err = err {
+                                return
+                            }
+                            print("Success")
+                        }
+                        
+                    }
+        struct RegisterView_Previews: PreviewProvider {
+                    static var previews: some View {
+                        RegisterView()
+                    }
+                }
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+extension View {
+            func getRect() ->CGRect{
+                return UIScreen.main.bounds
+            }
+            func getViewController() -> UIViewController{
+                guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else{
+                    return .init()
+                }
+                guard let root = screen.windows.first?.rootViewController else{
+                    return .init()
+                }       
+                return root
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+
+\subsection*{HomeView nézet}
+\addcontentsline{toc}{subsection}{HomeView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct HomeView: View {
+            
+            @ObservedObject var viewModel = ViewModel()
+            
+            @State var searchText = ""
+            @State var maxCount = 20
+             
+            var body: some View {
+                ZStack{
+                    SetBackgroundImage(image: "Background3")
+                    
+                    VStack(){
+                        HStack{
+                            Image("Logo2")
+                                .padding(.top, 60)
+                                .frame(maxWidth: .infinity,alignment: .center)
+                                .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+                        }
+                        VStack(alignment: .leading, spacing: 15){
+                            HStack{
+                                Text("Hi , Robi!")
+                                    .font(.custom(.regular, size: 22))
+                                    .foregroundColor(Color.theme.white)
+                                
+                                Spacer()
+                                
+                                Image("noProfile")
+                                    .resizable()
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke((Color.theme.white), lineWidth: 2))
+                                    .frame(width: 40, height: 40)
+                            }
+                            Text("Get stronger today!")
+                                .font(.custom(.light, size: 20))
+                                .foregroundColor(Color.theme.white)
+                        }
+                        HStack{
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(
+                                    viewModel.searchText.isEmpty ? Color.theme.darkGray : Color.theme.lighBlue
+                                )     
+                            TextField("Search by training plan...", text: $viewModel.searchText)
+                                .foregroundColor(Color.theme.darkGray)
+                                .onChange(of: viewModel.searchText) { text in
+                                                viewModel.filterContent()
+                                    var checked = viewModel.searchText.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+                                checked = String(checked.prefix(maxCount))
+                                    viewModel.searchText = checked
+                                                }
+                                
+                }   
+            }
+        }  
+    \end{lstlisting}   
+\end{minipage}
+
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+                            .overlay(
+                                    Image(systemName: "xmark.circle.fill")
+                                        .padding()
+                                        .offset(x: 10)
+                                        .opacity(viewModel.searchText.isEmpty ? 0.0 : 1.0)
+                                        .foregroundColor(Color.theme.lighBlue)
+                                        .onTapGesture {
+                                            viewModel.searchText = ""
+                                        }
+                                    ,alignment: .trailing
+                                )
+                                .onChange(of: viewModel.searchText) { text in
+                                    viewModel.filterContent()
+                                }           
+                        }
+                        .font(.headline)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.theme.white))
+                        .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)  
+                        HStack{
+                            Text("My collection:")
+                                .font(.custom(.regular, size: 18))
+                                .foregroundColor(Color.theme.white)
+                                .padding(.top)
+                            Spacer()
+                        }
+                    }
+                    .frame(width: UIScreen.main.bounds.width - 52)
+        ScrollView(.vertical, showsIndicators: false){
+            if $viewModel.filteredPlan.count > 0 {
+                ForEach(viewModel.filteredPlan) { traningPlan in
+                    
+                    TrainingPlanCardView(traningPlan: traningPlan)
+                    
+                }
+                .frame(maxWidth: .infinity)
+            } else {
+                HStack(alignment: .center){
+                    Spacer()
+                    Text("No training plan found")
+                        .font(.custom(.regular, size: 20))
+                        .foregroundColor(Color.theme.white)
+                    Spacer()
+                }
+                .padding(.top,200)
+            }
+        }  
+        struct HomeView_Previews: PreviewProvider {
+            static var previews: some View {
+                HomeView()
+                    .environmentObject(ViewModel())
+            
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{TabBarView nézet}
+\addcontentsline{toc}{subsection}{TabBarView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct TabBarView: View {
+            @State var selectedTab = "house"
+            
+            init(){
+                
+                UITabBar.appearance().isHidden = true
+            }
+            var body: some View {
+                ZStack(alignment: Alignment(horizontal: .center, vertical: .bottom)){
+                    
+                    TabView(selection: $selectedTab){
+                        HomeView()
+                            .tag("house")
+                        ScannerView()
+                            .tag("qrcode.viewfinder")
+                        ProfileView()
+                            .tag("person")
+                    }
+                }
+            }
+        }
+
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        HStack(spacing: 0){
+            ForEach(tabs, id:\.self){ image in
+                Button {
+                    withAnimation(.spring()){
+                        selectedTab = image
+                    }
+                } label: {
+                        VStack(alignment: .center, spacing: 4){
+                            Image(systemName: image)
+                                .resizable()
+                                .renderingMode(.template)
+                                .aspectRatio(contentMode:.fit)
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(selectedTab == image ?  Color.theme.lighBlue : Color.theme.white)
+                        }
+                }
+            }
+        }
+                    {
+                         if image != tabs.last{
+                            Spacer(minLength: 0)
+                        }
+                    }
+                    .padding(.horizontal,50)
+                    .padding(.vertical, 20)
+                    .shadow(color: Color.theme.darkGray.opacity(0.5), radius:4, x:0, y: -1)
+                    .background(Color.theme.darkGray)
+                    .cornerRadius(30)
+                    .ignoresSafeArea(.all, edges: .bottom)
+            
+        
+        var tabs = ["house", "qrcode.viewfinder", "person"]
+
+        struct TabBarView_Previews: PreviewProvider {
+            static var previews: some View {
+                TabBarView()
+            }
+        }
+
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{TraningPlanView nézet}
+\addcontentsline{toc}{subsection}{TraningPlanView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct TraningPlanView: View {
+            @ObservedObject var viewModel = ViewModel()
+            var traningPlan: TraningPlan
+            var body: some View {
+                VStack{
+                    ZStack(alignment: .top){
+                        Image("Background5")
+                            .frame(height: 325)
+                            
+                        VStack(alignment: .leading){
+                            HeaderWithLogoView(qrVisibility: false,arrowVisibility:true, navigationPage: .homePage)
+                                .padding(.top)
+                            
+                            Text(traningPlan.name)
+                                .foregroundColor(Color.theme.white)
+                                .font(.custom(.light, size: 30))
+                                .padding(.top, 130)
+                            HStack(spacing: 170){
+                                HStack{
+                                    Image(systemName: "stopwatch")
+                                        .frame(width: 18,height: 18)
+                                    Text("\(traningPlan.duration) min")
+                                        .font(.custom(.regular, size: 15))
+                                }
+                            }
+                            .foregroundColor(Color.theme.white)
+                            
+                            VStack{
+                                Text("Exercises")
+                                    .foregroundColor(Color.theme.white)
+                                    .font(.custom(.medium, size: 14))
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .padding()
+                                    .background(Color.theme.lighBlue)
+                                    .cornerRadius(20)
+                                    .padding(.top)
+                            }
+                            
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        ScrollView{
+            if $viewModel.exercise.count > 0 {
+                    ForEach(viewModel.exercise){ exercise in
+                        ExerciseCardView(exercise: exercise)
+                }
+                .padding(.vertical, 5)
+            }
+        }
+        .padding(.vertical, 15)
+                        }
+                        .frame(width: UIScreen.main.bounds.width - 52)
+                    }
+                }
+                .background(Color.theme.darkGray)
+                .ignoresSafeArea()
+            }
+        }
+        struct TraningPlanView_Previews: PreviewProvider {
+            static var previews: some View {
+                TraningPlanView()
+            }
+        }  
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{ExerciseDetailView nézet}
+\addcontentsline{toc}{subsection}{ExerciseDetailView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct ExerciseDetailView: View {
+            @State var showMapView:Bool = false
+            var exercise: Exercise
+            
+            var body: some View {
+                VStack{
+                    HStack(alignment: .top){
+                        VStack(alignment: .leading){
+                            VStack(alignment: .center, spacing: 40){
+                                HeaderWithLogoView(qrVisibility: true,arrowVisibility:true, navigationPage: .traningPage)
+                                    .padding(.top)
+                                Image(exercise.imageUrl)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 300)
+                                    .cornerRadius(10)
+                            }
+                            VStack(alignment: .leading, spacing: 10){
+                                HStack{
+                                    Text(exercise.name)
+                                        .font(.custom(.medium, size: 22))
+                                    Spacer()
+                                    Button {
+                                        showMapView.toggle()
+                                    } label: {
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color.theme.lighBlue)
+                                                .frame(width: 35, height: 35)
+                                            
+                                            Text(exercise.machineNumber).font(.custom(.medium, size: 20))
+                                                .foregroundColor(Color.theme.white)
+                                        }
+                                    }
+                                    .sheet(isPresented: $showMapView, content: {
+                                        MapView()
+                                    })
+                            }
+                                ScrollView(.vertical, showsIndicators: false){
+                                    VStack(alignment: .leading, spacing: 10){
+                                        Text("Initial situation")
+                                            .font(.custom(.regular, size: 18))
+                                        Text(exercise.description)
+                                            .font(.custom(.light, size: 14))
+                                        Text("The movement")
+                                            .font(.custom(.regular, size: 18))
+                                        Text(exercise.moment)
+                                            .font(.custom(.light, size: 14))
+                                        Text("Workout tip")
+                                            .font(.custom(.regular, size: 18))
+                                        Text(exercise.tip)
+                                            .font(.custom(.light, size: 14))
+                                    }
+                                }
+                            }
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        .padding(.bottom)
+                            .foregroundColor(Color.theme.white)
+                            .padding(.top, 40)
+                        }
+                        .frame(width: UIScreen.main.bounds.width - 52)
+                    }
+                    .edgesIgnoringSafeArea(.all)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.theme.darkGray)
+                }
+            }
+        }
+                
+        struct ExerciseDetailView_Previews: PreviewProvider {
+            static var previews: some View {
+                ExerciseDetailView()
+                    .preferredColorScheme(.dark)
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{ProfileView nézet}
+\addcontentsline{toc}{subsection}{ProfileView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+
+        struct ProfileView: View {
+            
+            @ObservedObject var viewModel = ViewModel()
+
+            @State var email = ""
+            @State var firstName = ""
+            @State var lastName = ""
+            @State var password = ""
+            @State var passwordConfirmation = ""
+            
+            @State var saveProcessing = false
+            @State var logOutProcessing = false
+            @State var showLogoutOption = false
+            
+            var dataIsValid: Bool {
+                return !email.isEmpty && !password.isEmpty && !firstName.isEmpty && !lastName.isEmpty && !passwordConfirmation.isEmpty && password == passwordConfirmation
+            }
+            var buttonColor: Color {
+                return dataIsValid ? Color.theme.lighBlue : .gray
+            }
+            @EnvironmentObject var viewRouter: ViewRouter
+            var body: some View {
+                ZStack{
+                    Image("Background2")
+                        
+                    VStack{
+                        HeaderView(title: "Edit profile", navigationPage: .homePage, arrowVisibility: false)
+                            .padding(.top,40)
+                            .padding(.bottom,30)
+                        Spacer()
+
+                        ZStack{
+                            Image("noProfile")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 118, height: 118)
+                                .scaledToFit()
+                                .cornerRadius(4)
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                                RoundedRectangle(cornerRadius: 4)
+                                    .strokeBorder(Color.theme.white, lineWidth: 4)
+                                    .compositingGroup()
+                                    .frame(width: 118, height: 118)
+                                    .shadow(color: Color.theme.darkGray,radius: -4, x:0, y:4)
+                        }
+                        
+                        VStack{
+                            ScrollView{
+                                ForEach(viewModel.user){ data in
+                                        TextFieldView(text: $email, title: "Email")
+                                        TextFieldView(text: $lastName, title: "Last name")
+                                        TextFieldView(text: $firstName, title: "First name")
+                                        SecureFieldView(text: $password, title: "Password")
+                                        SecureFieldView(text: $passwordConfirmation, title: "Password confirmation")
+                                            .padding(.bottom, 40)
+                                }
+                            }
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+                        Button {
+                                viewModel.updateUser(email: self.email, password: self.password, firstName: self.firstName, lastName: self.lastName)
+                            } label: {
+                                PrimaryButton(title: "Save", fontColor: Color.theme.white, backgroundColor: buttonColor)
+                            }
+                                    .disabled(!dataIsValid)
+                            
+                                if saveProcessing {
+                                    ProgressView()
+                                }
+                                if !viewModel.saveErrorMessage.isEmpty {
+                                    Text("Failed: \(viewModel.saveErrorMessage)")
+                                                    .foregroundColor(.red)
+                                }
+                            Button {
+                                showLogoutOption.toggle()
+                            } label: {
+                                PrimaryButton(title: "Log out", fontColor: Color.theme.white, backgroundColor: Color.theme.red)
+                                    .padding(.bottom, 140)
+                            }
+                            .actionSheet(isPresented: $showLogoutOption){
+                                .init(title: Text("Sure you want to log out?"),buttons: [
+                                    .destructive(Text("Log Out"),action: {
+                                        withAnimation{
+                                            logOutUser()
+                                        }
+                                    }),
+                                    .cancel()
+                                ])
+                            }
+                        }
+                        
+                    }
+                    .frame(width: UIScreen.main.bounds.width - 52)
+                }
+                .background(Color.theme.gray)
+                .ignoresSafeArea()
+                .frame(maxWidth: .infinity)
+            }
+            
+            func logOutUser() {
+                logOutProcessing = true
+                let firebaseAuth = Auth.auth()
+                do {
+                try firebaseAuth.signOut()
+                } catch let logOutError as NSError {
+                print("Logout error: %@", logOutError)
+                    logOutProcessing = false
+                }
+                withAnimation{
+                    viewRouter.currentPage = .logInPage
+                }
+            
+            }
+        }
+
+        struct ProfileView_Previews: PreviewProvider {
+            static var previews: some View {
+                TabBarView()
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{MapView nézet}
+\addcontentsline{toc}{subsection}{MapView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct MapView: View {
+            
+            @State var currentScale: CGFloat = 0
+            @State var finalScale: CGFloat = 1
+            
+            var body: some View {
+                VStack{
+                    HeaderWithLogoView(qrVisibility: true,arrowVisibility: false, navigationPage: .homePage)
+                    Spacer()
+                    Image("gymMap")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: .infinity, height: 200)
+                        .scaleEffect(currentScale + finalScale)
+                        .gesture(
+                        MagnificationGesture()
+                            .onChanged{ newScale in
+                                currentScale = newScale
+                            }
+                            .onEnded{ scale in
+                                finalScale = scale
+                                currentScale = 0
+                            }
+                        )
+                    Spacer()
+                }
+                .frame(width: UIScreen.main.bounds.width - 52)
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+                .frame(maxWidth: .infinity)
+                .background(Color.theme.darkGray)
+            }
+        }
+
+        struct MapView_Previews: PreviewProvider {
+            static var previews: some View {
+                MapView()
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{QrCodeScannerView nézet}
+\addcontentsline{toc}{subsection}{QrCodeScannerView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct QrCodeScannerView: UIViewRepresentable {
+            var supportedBarcodeTypes: [AVMetadataObject.ObjectType] = [.qr]
+            typealias UIViewType = CameraPreview
+            
+            private let session = AVCaptureSession()
+            private let delegate = CameraDelegate()
+            private let metadataOutput = AVCaptureMetadataOutput()
+            
+            func torchLight(isOn: Bool) -> QrCodeScannerView {
+                if let backCamera = AVCaptureDevice.default(for: AVMediaType.video) {
+                    if backCamera.hasTorch {
+                        try? backCamera.lockForConfiguration()
+                        if isOn {
+                            backCamera.torchMode = .on
+                        } else {
+                            backCamera.torchMode = .off
+                        }
+                        backCamera.unlockForConfiguration()
+                    }
+                }
+                return self
+            }
+            func interval(delay: Double) -> QrCodeScannerView {
+                delegate.scanInterval = delay
+                return self
+            }
+            func found(r: @escaping (String) -> Void) -> QrCodeScannerView {
+                delegate.onResult = r
+                return self
+            }
+    \end{lstlisting}   
+\end{minipage}
+
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+    }
+        func makeUIView(context: UIViewRepresentableContext<QrCodeScannerView>) = QrCodeScannerView.UIViewType {
+        let cameraView = CameraPreview(session: session)
+        
+        if targetEnvironment(simulator)
+        cameraView.createSimulatorView(delegate: self.delegate)
+        else
+        checkCameraAuthorizationStatus(cameraView)
+        endif
+        
+        return cameraView
+        static func dismantleUIView(_ uiView: CameraPreview, coordinator: ()) {
+        uiView.session.stopRunning()
+        }
+    
+        private func checkCameraAuthorizationStatus(_ uiView: CameraPreview) {
+            let cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+            if cameraAuthorizationStatus == .authorized {
+                setupCamera(uiView)
+            } else {
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    DispatchQueue.main.sync {
+                        if granted {
+                            self.setupCamera(uiView)
+                        }
+                    }
+                }
+            }
+        }
+        func updateUIView(_ uiView: CameraPreview, context: UIViewRepresentableContext<QrCodeScannerView>) {
+            uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+            uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        }
+    }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{ScannerView nézet}
+\addcontentsline{toc}{subsection}{ScannerView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct ScannerView: View {
+    
+            @ObservedObject var viewModel = ScannerViewModel()
+            
+            var body: some View {
+                ZStack{
+                    QrCodeScannerView()
+                        .found(r: self.viewModel.onFoundQrCode)
+                        .torchLight(isOn: self.viewModel.torchIsOn)
+                        .interval(delay: self.viewModel.scanIterval)
+                    Image("qrcode")
+                    
+                    VStack{
+                        VStack{
+                            Text("Keep scanning for QR-codes")
+                                .font(.custom(.medium, size: 14))
+                                .foregroundColor(Color.theme.white)
+                                .padding(.vertical, 17)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .background(Color.theme.lighBlue)
+                                .cornerRadius(5)
+                                .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+                                .padding()
+                    
+                            Text(self.viewModel.lastQrCode)
+                                .foregroundColor(Color.theme.white)
+                                .bold()
+                                .lineLimit(5)
+                                .padding()
+                        }
+                        .padding(.vertical, 10)
+    \end{lstlisting}   
+\end{minipage}
+
+
+\begin{spacing}{2}
+\end{spacing}
+\hspace*{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+            
+        HStack{
+            Button(action: {
+                self.viewModel.torchIsOn.toggle()
+            }, label: {
+                Image(systemName: self.viewModel.torchIsOn ? "flashlight.on.fill" : "flashlight.off.fill")
+                    .font(.system(size: 36))
+                    .foregroundColor(self.viewModel.torchIsOn ? Color.theme.lighBlue : Color.theme.white)
+            })
+            .padding(.bottom, 50)
+        }
+        
+        struct ScannerView_Previews: PreviewProvider {
+            static var previews: some View {
+                ScannerView()
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{MotherView nézet}
+\addcontentsline{toc}{subsection}{MotherView nézet}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct MotherView: View {
+            @EnvironmentObject var viewRouter: ViewRouter
+            
+            var body: some View {
+                switch viewRouter.currentPage {
+                case .welcomePage:
+                    WelcomeView()
+                case .registerPage:
+                    RegisterView()
+                case .logInPage:
+                    LoginView()
+                case .homePage:
+                    TabBarView()
+                case .traningPage:
+                    TraningPlanView()
+                case .exercisePage:
+                    ExerciseDetailView()
+                case .qrPage:
+                    ScannerView()
+                }
+            }
+        }
+
+        struct MotherView_Previews: PreviewProvider {
+            static var previews: some View {
+                MotherView().environmentObject(ViewRouter())
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\section*{Komponensek} 
+\addcontentsline{toc}{section}{Komponensek}
+
+\subsection*{ExerciseCardView komponens}
+\addcontentsline{toc}{subsection}{ExerciseCardView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+
+        struct ExerciseCardView: View {
+            @ObservedObject var viewModel = ViewModel()
+            @EnvironmentObject var viewRouter: ViewRouter
+            @State private var showingTraningPlan = false
+            var exercise: Exercise
+            
+            var body: some View {
+                Button(action: {
+                    withAnimation {
+                        viewRouter.currentPage = .exercisePage
+                    }
+                }){
+                    HStack(alignment: .center, spacing: 15){
+                        Image(exercise.imageUrl)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 51, height: 51)
+                        
+                        VStack(alignment: .leading, spacing: 8){
+                            Text(exercise.name)
+                                .font(.custom(.medium, size: 13))
+                            Text(exercise.setOf)
+                                .font(.custom(.regular, size: 12))
+                        }
+                        
+                        Image(systemName: "chevron.right")
+                            .frame(width: 24, height: 24)
+                            .background(Color.theme.lighBlue)
+                            .cornerRadius(50)
+                    }
+                    .padding()
+                    .foregroundColor(Color.theme.white)
+                    .frame(maxWidth: 350, alignment: .center)
+                    .background(Color.theme.gray.opacity(0.3))
+                    .cornerRadius(15)
+                    .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+                    .overlay(RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.theme.white, lineWidth: 2))
+                }
+            }
+        }
+
+        struct ExerciseCardView_Previews: PreviewProvider {
+            static var previews: some View {
+                Group{
+                    ExerciseCardView(exercise: viewModel.exercise)
+                        .previewLayout(.sizeThatFits)
+                        .preferredColorScheme(.dark)
+                    ExerciseCardView()
+                        .previewLayout(.sizeThatFits)
+                        .preferredColorScheme(.light)
+                        
+                }
+                TraningPlanView()
+                
+            }
+        }
+
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{HeaderView komponens}
+\addcontentsline{toc}{subsection}{HeaderView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct HeaderView: View {
+            
+            @State var title: String
+            @State var navigationPage: Page
+            @State var arrowVisibility:Bool
+            @EnvironmentObject var viewRouter: ViewRouter
+            
+            var body: some View {
+                HStack{
+                    if arrowVisibility {
+                        Button(action:{
+                            viewRouter.currentPage = navigationPage
+                        }) {
+                            Image(systemName: "arrow.left")
+                                .foregroundColor(Color.theme.white)
+                                .font(.system(size: 30))
+                        }
+                    }
+                    
+                    Spacer()
+                }
+                .overlay(content: {
+                    Text(title)
+                        .foregroundColor(.white)
+                        .font(.custom(.medium, size: 24))
+                })
+                .padding(.top, 50)
+            }
+        }
+        
+        struct HeaderView_Previews: PreviewProvider {
+            static var previews: some View {
+                HeaderView(title: "Login", navigationPage: .welcomePage, arrowVisibility: true)
+                    .previewLayout(.sizeThatFits)
+                    .preferredColorScheme(.dark)
+            }
+        }
+        
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{HeaderWithLogoView komponens}
+\addcontentsline{toc}{subsection}{HeaderWithLogoView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct HeaderWithLogoView: View {
+            
+            @State var qrVisibility: Bool
+            @State var arrowVisibility: Bool
+            
+            @ObservedObject var viewModel = ViewModel()
+            @EnvironmentObject var viewRouter: ViewRouter
+            
+            @State var navigationPage: Page
+            @State var showMapView:Bool = false
+            
+            var body: some View {
+                    HStack{
+                        if self.arrowVisibility{
+                            Button {
+                                withAnimation {
+                                    viewRouter.currentPage = navigationPage
+                                }
+                            } label: {
+                                Image(systemName: "arrow.left")
+                                    .foregroundColor(Color.theme.white)
+                                    .font(.system(size: 30))
+                            }
+                        }
+                        
+                    }}}
+    \end{lstlisting}   
+\end{minipage}
+
+
+
+\begin{spacing}{2}
+\end{spacing}
+\hspace*{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+                if self.qrVisibility{
+                            Button {
+                                showMapView.toggle()
+                            } label: {
+                                Image(systemName: "qrcode.viewfinder")
+                                    .foregroundColor(Color.theme.lighBlue)
+                                    .font(.system(size: 30))
+                            }
+                            .sheet(isPresented: $showMapView, content: {
+                                ScannerView()
+                            })
+                        }
+                    }
+                    .overlay(content: {
+                            Image("Logo2")
+                                .foregroundColor(.white)
+                                .font(.custom(.medium, size: 24))
+                    })
+                    .padding(.top, 50)
+            }
+        }
+
+        struct HeaderWithLogoView_Previews: PreviewProvider {
+            static var previews: some View {
+                HeaderWithLogoView(qrVisibility: true, arrowVisibility: true, navigationPage: .logInPage)
+                    .previewLayout(.sizeThatFits)
+                    .preferredColorScheme(.dark)
+            }
+        }
+
+    \end{lstlisting}   
+\end{minipage}
+
+
+\subsection*{PrimaryButton komponens}
+\addcontentsline{toc}{subsection}{PrimaryButton komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct PrimaryButton: View {
+    
+            var title: String
+            var fontColor: Color
+            var backgroundColor: Color
+            @StateObject var viewRouter = ViewRouter()
+            
+            var body: some View {
+                    Text(title)
+                        .font(.custom(.medium, size: 20))
+                        .foregroundColor(fontColor)
+                        .padding(.vertical, 17)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .background(backgroundColor)
+                        .cornerRadius(5)
+                        .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+            }
+        }
+        
+        struct PrimaryButtonView_Previews: PreviewProvider {
+            static var previews: some View {
+                PrimaryButton(title: "Next", fontColor: Color.theme.white, backgroundColor: Color.theme.darkGray)
+                    .padding()
+                    .previewLayout(.sizeThatFits)
+                
+            }
+        }
+    \end{lstlisting}   
+\end{minipage} 
+
+
+\subsection*{SearchBarView komponens}
+\addcontentsline{toc}{subsection}{SearchBarView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct SearchBarView: View {
+            
+            @ObservedObject var viewModel = ViewModel()
+            
+            var body: some View {
+                HStack{
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(
+                            viewModel.searchText.isEmpty ? Color.theme.darkGray : Color.theme.lighBlue
+                        )
+                    
+                    TextField("Search by training plan...", text: $viewModel.searchText)
+                        .foregroundColor(Color.theme.darkGray)
+                        .onChange(of: viewModel.searchText) { text in
+                                            viewModel.filterContent()
+                                        }
+                        .overlay(
+                            Image(systemName: "xmark.circle.fill")
+                                .padding()
+                                .offset(x: 10)
+                                .opacity(viewModel.searchText.isEmpty ? 0.0 : 1.0)
+                                .foregroundColor(Color.theme.lighBlue)
+                                .onTapGesture {
+                                    viewModel.searchText = ""
+                                }
+                            ,alignment: .trailing
+                        )
+                }
+                .font(.headline)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.theme.white))
+                .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+            }
+        }
+
+        struct SearchBarView_Previews: PreviewProvider {
+            static var previews: some View {
+                Group{
+                    SearchBarView()
+                        .previewLayout(.sizeThatFits)
+                        .preferredColorScheme(.light)
+                    
+                    SearchBarView()
+                        .previewLayout(.sizeThatFits)
+                        .preferredColorScheme(.dark)
+                }
+                
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{SecureFieldView komponens}
+\addcontentsline{toc}{subsection}{SecureFieldView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+
+        struct SecureFieldView: View {
+            
+            @Binding var text: String
+            @State var title: String
+            @State var visibility = false
+            
+            var body: some View {
+                HStack{
+                    
+                    ZStack(alignment: .leading){
+                        
+                        if text.isEmpty{
+                            Text(title)
+                                .foregroundColor(Color.theme.white.opacity(0.5))
+                                .font(.custom(.light, size: 20))
+                        }
+                        if self.visibility{
+                            TextField("", text: self.$text)
+                        }else{
+                            SecureField("", text: self.$text)
+                        }
+                    }
+    \end{lstlisting}   
+\end{minipage}
+\begin{spacing}{2}
+\end{spacing}
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        Button(action: {
+                                self.visibility.toggle()
+                            })  {
+                                Image(systemName: self.visibility ? "eye.slash" : "eye.fill")
+                                    .foregroundColor(Color.theme.white)
+                                    .padding(.trailing, 5)
+                                    .font(.system(size: 16))
+                            }
+                        }
+                        .overlay(Rectangle().frame(height: 2).padding(.top, 35))
+                        .foregroundColor(.white)
+                        .font(.custom(.light, size: 20))
+                        .padding(.vertical, 20)
+                    }
+                }
+
+                struct SecureFieldView_Previews: PreviewProvider {
+                    @State static var test = "hello"
+                    
+                    static var previews: some View {        
+                        SecureFieldView(text: $test, title: "Password")
+                            .previewLayout(.sizeThatFits)
+                            .preferredColorScheme(.dark)
+                    }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{SecureFieldView komponens}
+\addcontentsline{toc}{subsection}{SecureFieldView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct SocialLoginButton: View {
+            var image: String
+            var text: String
+            
+            var body: some View {
+                    Label(text, image: image)
+                        .font(.custom(.light, size: 16))
+                        .foregroundColor(Color.theme.darkGray)
+                        .padding(.vertical, 17)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .background(Color.theme.white)
+                        .cornerRadius(5)
+                        .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+            }
+        }
+        
+        struct SocialLoginButtonView_Previews: PreviewProvider {
+            static var previews: some View {
+                SocialLoginButton(image: "GoogleLogo", text: "Sign in with Google")
+                    .padding()
+                    .previewLayout(.sizeThatFits)
+                
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{TextFieldView komponens}
+\addcontentsline{toc}{subsection}{TextFieldView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct TextFieldView: View {
+    
+            @Binding var text: String
+            @State var title: String
+            
+            var body: some View {
+                ZStack(alignment: .leading){
+                    if text.isEmpty{
+                        Text(title)
+                            .padding(.top,20)
+                            .foregroundColor(Color.theme.white.opacity(0.5))
+                            .font(.custom(.light, size: 20))
+                            .padding(.vertical, 10)
+                    }            
+    \end{lstlisting}   
+\end{minipage}
+
+\begin{spacing}{2}
+\end{spacing}
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        TextField("", text: $text)
+                                .overlay(Rectangle().frame(height: 2).padding(.top, 35))
+                                .padding(.top,20)
+                                .font(.custom(.light, size: 20))
+                                .foregroundColor(.white)
+                                .padding(.vertical, 10)
+                        }
+                    }
+                }
+        struct TextFieldView_Previews: PreviewProvider {
+            @State static var test: String = ""
+            
+            static var previews: some View {
+                TextFieldView(text: $test, title: "Email")
+                    .background(.black)
+            }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{TrainingPlanCardView komponens}
+\addcontentsline{toc}{subsection}{TrainingPlanCardView komponens}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        struct TrainingPlanCardView: View {
+
+            @ObservedObject var viewModel = ViewModel()
+            @EnvironmentObject var viewRouter: ViewRouter 
+            @State private var showingTraningPlan = false
+            var traningPlan: TraningPlan 
+            var body: some View {
+                    ZStack{
+                        AsyncImage(url: URL(string:traningPlan.imageUrl))
+                                    .frame(width: 340,height: 160)
+                                    .cornerRadius(15)
+        
+                                HStack{
+                                    Spacer()
+                                    Button(action: {
+                                        withAnimation {
+                                            viewRouter.currentPage = .traningPage
+                                        }
+                                    }){
+                                        HStack{
+                                            Text("View at")
+                                                .font(.custom(.medium, size: 30))
+                                                .foregroundColor(Color.theme.white)
+                                                .shadow(color: Color.theme.darkGray.opacity(0.25), radius: 5, x: 0, y: 4)
+                                            ZStack{
+                                                RoundedRectangle(cornerRadius: 50)
+                                                    .fill(Color.theme.lighBlue)
+                                                    .frame(width: 32, height: 32)
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(Color.theme.white)
+                                                    .font(.system(size: 20))
+                                            }
+                                        }
+                                        .padding(.trailing)
+                                    }
+                                }
+                        
+                                HStack{
+                                    Image(traningPlan.imageUrl)
+                                    Spacer()
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 10 ){
+                                    Text(traningPlan.level)
+                                        .font(.custom(.light, size: 14))
+                                        .foregroundColor(Color.theme.lighBlue)
+                                    Text(traningPlan.name)
+                                        .font(.custom(.regular, size: 20))
+                                        .foregroundColor(Color.theme.white)
+                                    Spacer()
+                                    HStack(){
+                                        Image(systemName: "stopwatch")
+                                            .foregroundColor(Color.theme.white)
+                                            .font(.system(size: 14))
+                                        Text("\(traningPlan.duration) min")
+                                            .font(.custom(.light, size: 14))
+                                            .foregroundColor(Color.theme.white)
+                                    }
+    \end{lstlisting}   
+\end{minipage}
+
+\begin{spacing}{2}
+\end{spacing}
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+                      }
+                        .overlay(RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.theme.white, lineWidth: 2)
+                        .shadow(color: Color.theme.darkGray.opacity(0.3), radius:4, x:0, y:4))
+                        .frame(width: .infinity, height: 160)
+                        .padding(.top)
+
+\end{lstlisting}   
+\end{minipage}
+
+\section*{További modulok} 
+\addcontentsline{toc}{section}{További modulok}
+
+\subsection*{ScannerViewModel modul}
+\addcontentsline{toc}{subsection}{ScannerViewModel modul}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        class ScannerViewModel: ObservableObject {
+        
+            let scanIterval: Double = 1.0
+            
+            @Published var torchIsOn: Bool = false
+            @Published var lastQrCode: String = "Qr-code goes here"
+            
+            func onFoundQrCode (_ code: String){
+                self.lastQrCode = code
+            }
+        }
+\end{lstlisting}   
+\end{minipage}
+
+\subsection*{ViewModel modul}
+\addcontentsline{toc}{subsection}{ViewModel modul}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        final class ViewModel: ObservableObject {
+    
+            @Published var searchText = ""
+            @Published var user: [User] = []
+            @Published var traningPlan: [TraningPlan] = []
+            @Published var filteredPlan: [TraningPlan] = []
+            @Published var exercise: [Exercise] = []
+            
+            @Published var saveErrorMessage = ""
+            
+            init(){
+                getUserData()
+                getExerciseData()
+                getTraingPlanData()
+            }
+            
+            private let auth = Auth.auth()
+            private let db = Firestore.firestore()
+            var uuid: String? {
+                auth.currentUser?.uid
+            }
+            var userIsAuthenticated: Bool {
+                auth.currentUser != nil
+            }
+            var userIsAuthenticatedAndSynced: Bool {
+                user != nil && userIsAuthenticated}
+            
+            func filterContent() {
+                   let keywordRegex = "\\b(\\w*" + searchText.lowercased() + "\\w*)\\b"
+        
+                   if searchText.count > 1 {
+                       var matchingPlans: [TraningPlan] = []
+                       traningPlan.forEach { traning in
+                           let searchContent = traning.name + traning.level
+                           if searchContent.lowercased().range(of: keywordRegex, options: .regularExpression) != nil {
+                               matchingPlans.append(traning)
+                           }
+                       }
+                       self.filteredPlan = matchingPlans
+                   } else {
+                       filteredPlan = traningPlan
+                   }
+               }
+    \end{lstlisting}   
+\end{minipage}
+
+\begin{spacing}{2}
+\end{spacing}
+\hspace{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]   
+            func getUserData() {
+                db.collection("users").getDocuments { snapshot, error in
+                    if error == nil {
+                        if let snapshot = snapshot {
+                            DispatchQueue.main.async {
+                                self.user = snapshot.documents.map { document in
+                                    return User(id: document.documentID,
+                                                email: document["email"] as? String ?? "",
+                                                password: document["password"] as? String ?? "",
+                                                firstName: document["firstName"] as? String ?? "",
+                                                lastName: document["lastName"] as? String ?? "",
+                                                imageUrl: document["imageUrl"] as? String ?? "")
+                                }
+                            }
+                        }
+                    } else {
+                        print("Success")
+                    }
+                }
+            }
+            func getUserInformation(email: String, lastName: String,firstName: String,password: String, imageUrl: String){
+                guard let uid = Auth.auth().currentUser?.uid else {return}
+                let userData = ["email": email, "firstname": firstName, "lastname": lastName, "imageurl": imageUrl, "id": uid]
+                Firestore.firestore().collection("users").document(uid).setData(userData) { err in
+                    if let err = err {
+                        print(err)
+                        return
+                    }
+                }
+            }
+            func addUserData(firstName: String, lastName: String, email: String, password: String) {
+                guard let uid = Auth.auth().currentUser?.uid else {return}
+                db.collection("users").document(uid).setData(["firstName": firstName, "lastName": lastName, "email": email, "imageUrl": "ImageURL", "password": password]) { error in
+                    if error == nil {
+                        self.getUserData()
+                    }
+                    else {
+                        print("Success")
+                    }
+                }
+            }
+            func getTraingPlanData() {
+                db.collection("traningPlans").getDocuments { snapshot, error in
+                    if error == nil {
+                        if let snapshot = snapshot {
+                            DispatchQueue.main.async {
+                                self.traningPlan = snapshot.documents.map { document in
+                                    return TraningPlan(id: document.documentID,
+                                                    name: document["name"] as? String ?? "",
+                                                    duration: (document["duration"] as? Int ?? nil)!,
+                                                    level: document["level"] as? String ?? "",
+                                                    imageUrl: document["imageUrl"] as? String ?? "",
+                                                    exercises: self.exercise
+                                    )
+                                }
+                                self.filteredPlan=self.traningPlan
+                            }
+                        }
+                }
+            }
+            func getExerciseData() {
+                db.collection("exercises").getDocuments { snapshot, error in
+                    if error == nil {
+                        if let snapshot = snapshot {
+                            DispatchQueue.main.async { [self] in
+                                self.exercise = snapshot.documents.compactMap { document in
+                                    return Exercise(id: document.documentID,
+                                                    name: document["name"] as? String ?? "",
+                                                    setOf: document["setOf"] as? String ?? "",
+                                                    imageUrl: document["imageUrl"] as? String ?? "",
+                                                    description: document["description"] as? String ?? "",
+                                                    machineNumber: (document["machineNumber"] as? Int ?? nil)!
+                                    )
+                                }
+                            }
+                            
+                        }
+                    } else {
+                        print("Bad request")
+                    }
+                }
+            }
+        }
+    
+    \end{lstlisting}   
+\end{minipage}
+
+\begin{spacing}{2}
+\end{spacing}
+\hspace*{-10mm}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        func updateUser(email: String, password: String, firstName: String, lastName: String) {
+                        
+                        guard let id = Auth.auth().currentUser?.uid else { return }
+                        
+                        db.collection("users").document(id).updateData(["email": email,"firstName": firstName,"lastName": lastName, "password": password]){ err in
+                            if err != nil{
+                                self.saveErrorMessage = err?.localizedDescription ?? ""
+                                print((err?.localizedDescription)!)
+                                return
+                            }
+                            print("Success")
+                        }
+                    }
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{ViewRouter modul}
+\addcontentsline{toc}{subsection}{ViewRouter modul}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+
+        class ViewRouter: ObservableObject {
+            
+            @Published var currentPage: Page = .welcomePage
+        }
+
+        enum Page {
+            case welcomePage
+            case registerPage
+            case logInPage
+            case homePage
+            case traningPage
+            case exercisePage
+            case qrPage
+        }
+    \end{lstlisting}   
+\end{minipage}  
+
+\subsection*{ColorTheme modul}
+\addcontentsline{toc}{subsection}{ColorTheme modul}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        extension Color {
+            
+            static let theme = ColorTheme()
+            
+        }
+
+        struct ColorTheme {
+            
+            let darkBlue = Color("DarkBlue")
+            let lighBlue = Color("LightBlue")
+            let darkGray = Color("DarkGray")
+            let gray = Color("Gray")
+            let white = Color("White")
+            let red = Color("Red")
+        }
+    \end{lstlisting}   
+\end{minipage}
+
+\subsection*{SetFontFamily modul}
+\addcontentsline{toc}{subsection}{SetFontFamily modul}
+
+\begin{spacing}{2}
+\end{spacing}
+\begin{minipage}{\textwidth}
+    \linespread{0.8}\selectfont
+    \begin{lstlisting}[language=swift]
+        extension SetFontFamily{
+            static func custom(_ font:CustomFonts,size:CGFloat) -> SwiftUI.Font{
+                SwiftUI.Font.custom(font.rawValue, size: size)
+            }
+        }
+        enum CustomFonts: String{
+            case regular = "Ubuntu-Regular"
+            case italic = "Ubuntu-Italic"
+            case bold = "Ubuntu-Bold"
+            case medium = "Ubuntu-Medium"
+            case light = "Ubuntu-Light"
+            case mediumitalic = "Ubuntu-MediumItalic"
+        }
+}
+\end{lstlisting}   
+\end{minipage}
