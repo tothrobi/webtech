@@ -1,0 +1,5 @@
+Az objektumokban kulcsként szerepelhetnek számok, szövegek, és logikai értékek. 
+Az objektumokban a kulcsokat használva hozzáférhetünk az adatokhoz, amelyek az objektumban tárolódnak. 
+A kulcs választásának hatása a programozás során az lesz, hogy milyen egyszerűen tudjuk majd elérni az adatokat az objektumban. 
+Ha például egy szöveges kulcsot használunk, akkor egyszerűen elérhetjük az adatot az objektumban, ha a kulcsot átadjuk egy függvénynek. 
+Ha viszont egy számot használunk kulcsként, akkor lehet, hogy több lépésre lesz szükség az adat eléréséhez.

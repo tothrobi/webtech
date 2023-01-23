@@ -1,0 +1,22 @@
+body {
+  width: 35%;
+  margin: 0 auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
+h1 {
+  font-family: Arial, sans-serif;
+  color: navy;
+}
+thead th {
+  background-color: orange;
+}
+tbody tr:nth-child(odd) {
+  background-color: lemonchiffon;
+}
